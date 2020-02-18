@@ -19,8 +19,6 @@ from os import environ
 
 # isort: THIRDPARTY
 import dbus
-
-# isort: FIRSTPARTY
 from dbus_python_client_gen import DPClientInvocationError
 
 # isort: LOCAL
@@ -59,7 +57,6 @@ class StratisTestCase(SimTestCase):
         """
         environ["STRATIS_DBUS_TIMEOUT"] = "0"
         command_line = self._MENU + ["version"]
-
         with self.assertRaises(StratisCliActionError) as context:
             RUNNER(command_line)
 
@@ -67,19 +64,17 @@ class StratisTestCase(SimTestCase):
         cause = exception.__cause__
         self.assertIsInstance(cause, DPClientInvocationError)
         self.assertIsInstance(cause.__cause__, dbus.exceptions.DBusException)
-        self.assertEqual(
-            cause.__cause__.get_dbus_name(), "org.freedesktop.DBus.Error.NoReply"
-        )
-
-        with self.assertRaises(SystemExit):
+        
+        with self.assertRaises(SystemExit) as final_err:
             handle_error(exception)
 
+        final_code = final_err.exception.code
+        self.assertEqual(final_code, 1)
 
 class PropagateTestCase(RunTestCase):
     """
     Verify correct operation of --propagate flag.
     """
-
     def testPropagate(self):
         """
         If propagate is set, the expected exception will propagate.
