@@ -28,6 +28,9 @@ class TimeoutTestCase(unittest.TestCase):
     Test various timeout inputs.
     """
 
+    def setUp(self):
+        self.failureException = None
+
     def testTimeoutTooLarge(self):
         """
         Should fail because the timeout value is too large.

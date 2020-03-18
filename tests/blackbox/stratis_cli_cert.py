@@ -72,6 +72,7 @@ class StratisCertify(unittest.TestCase):
         to Stratis devices.
         :return: None
         """
+        self.failureException = None
         self.addCleanup(clean_up)
 
         if process_exists("stratisd") is None:

@@ -31,6 +31,7 @@ class FormattingTestCase1(unittest.TestCase):
     """
 
     def setUp(self):
+        self.failureException = None
         self.output = io.StringIO()
 
         # pylint: disable=bad-continuation

@@ -32,6 +32,10 @@ class ErrorFmtTestCase(unittest.TestCase):
     Test stringification of various error types.
     """
 
+    def setUp(self):
+
+        self.failureException = None
+
     def _string_not_empty(self, exception):
         """
         :param exception: an object of a Stratis CLI error type

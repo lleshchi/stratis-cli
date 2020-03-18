@@ -89,6 +89,9 @@ class RunTestCase(unittest.TestCase):
     Test case for running the program.
     """
 
+    def setUp(self):
+        self.failureException = None
+
     def check_error(self, expected_cause, command_line, expected_code):
         """
         Check that the expected exception was raised, and that the cause
@@ -161,6 +164,7 @@ class SimTestCase(RunTestCase):
         """
         Start the stratisd daemon with the simulator.
         """
+        super().setUp()
         self._service = _Service()
         self.addCleanup(self._service.cleanup)
         self._service.setUp()
